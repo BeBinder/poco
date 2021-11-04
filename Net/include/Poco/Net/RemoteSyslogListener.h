@@ -97,8 +97,8 @@ public:
 	static const std::string PROP_PORT;
 	static const std::string PROP_THREADS;
 
-    static const std::string LOG_PROP_APP;
-    static const std::string LOG_PROP_HOST;
+	static const std::string LOG_PROP_APP;
+	static const std::string LOG_PROP_HOST;
 	static const std::string LOG_PROP_STRUCTURED_DATA;
 
 protected:
