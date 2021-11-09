@@ -468,7 +468,7 @@ Poco::Message::Priority SyslogParser::convert(RemoteSyslogChannel::Severity seve
 	switch (severity)
 	{
 	case RemoteSyslogChannel::SYSLOG_EMERGENCY:
-		return Poco::Message::PRIO_FATAL;
+		return Poco::Message::PRIO_EMERGENCY;
 	case RemoteSyslogChannel::SYSLOG_ALERT:
 		return Poco::Message::PRIO_FATAL;
 	case RemoteSyslogChannel::SYSLOG_CRITICAL:

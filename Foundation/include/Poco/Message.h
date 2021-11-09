@@ -45,14 +45,15 @@ class Foundation_API Message
 public:
 	enum Priority
 	{
-		PRIO_FATAL = 1,   /// A fatal error. The application will most likely terminate. This is the highest priority.
-		PRIO_CRITICAL,    /// A critical error. The application might not be able to continue running successfully.
-		PRIO_ERROR,       /// An error. An operation did not complete successfully, but the application as a whole is not affected.
-		PRIO_WARNING,     /// A warning. An operation completed with an unexpected result.
-		PRIO_NOTICE,      /// A notice, which is an information with just a higher priority.
-		PRIO_INFORMATION, /// An informational message, usually denoting the successful completion of an operation.
-		PRIO_DEBUG,       /// A debugging message.
-		PRIO_TRACE        /// A tracing message. This is the lowest priority.
+		PRIO_EMERGENCY = 0, /// Added for syslogd
+		PRIO_FATAL,   		/// A fatal error. The application will most likely terminate. This is the highest priority.
+		PRIO_CRITICAL,    	/// A critical error. The application might not be able to continue running successfully.
+		PRIO_ERROR,       	/// An error. An operation did not complete successfully, but the application as a whole is not affected.
+		PRIO_WARNING,     	/// A warning. An operation completed with an unexpected result.
+		PRIO_NOTICE,      	/// A notice, which is an information with just a higher priority.
+		PRIO_INFORMATION, 	/// An informational message, usually denoting the successful completion of an operation.
+		PRIO_DEBUG,       	/// A debugging message.
+		PRIO_TRACE        	/// A tracing message. This is the lowest priority.
 	};
 	
 	Message();

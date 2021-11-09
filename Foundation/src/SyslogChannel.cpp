@@ -248,6 +248,8 @@ int SyslogChannel::getPrio(const Message& msg)
 		return LOG_CRIT;
 	case Message::PRIO_FATAL:
 		return LOG_ALERT;
+	case Message::PRIO_EMERGENCY:
+		return LOG_EMERG;
 	default:
 		return 0;
 	}
