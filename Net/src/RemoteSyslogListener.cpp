@@ -26,6 +26,7 @@
 #include "Poco/LoggingFactory.h"
 #include "Poco/Buffer.h"
 #include "Poco/Ascii.h"
+#include "StructuredDataParser.h"
 #include <cstddef>
 
 
@@ -305,7 +306,7 @@ void SyslogParser::parseNew(const std::string& line, RemoteSyslogChannel::Severi
 	std::string appName(parseUntilSpace(line, pos));
 	std::string procId(parseUntilSpace(line, pos));
 	std::string msgId(parseUntilSpace(line, pos));
-	std::string sd(parseStructuredData(line, pos));
+	std::string sd(Poco::Net::StructuredDataParser::parseStructuredDataString(line,pos));
 	std::string messageText(line.substr(pos));
 	pos = line.size();
 	Poco::DateTime date;

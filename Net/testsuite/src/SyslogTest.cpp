@@ -284,6 +284,41 @@ void SyslogTest::testStructuredData()
 	assertTrue (msgs[1].get("structured-data") == "[exampleSDID@32473 iut=\"3\" eventSource=\"Application\" eventID=\"1011\"]");
 }
 
+void SyslogTest::testStructuredData2()
+{
+	Poco::AutoPtr<RemoteSyslogChannel> channel = new RemoteSyslogChannel();
+	channel->setProperty("loghost", "127.0.0.1:51400");
+	channel->open();
+	Poco::AutoPtr<RemoteSyslogListener> listener = new RemoteSyslogListener(51400);
+	listener->open();
+	auto pCL = Poco::makeAuto<CachingChannel>();
+	listener->addChannel(pCL);
+	assertTrue (pCL->getCurrentSize() == 0);
+	Poco::Message msg1("asource", "amessage", Poco::Message::PRIO_CRITICAL);
+	msg1.set("structured-data", "[exampleSDID@32473 iut=\"3\" eventSource=\"Application\" eventID=\"1011\"]");
+	channel->log(msg1);
+	Poco::Message msg2("asource", "amessage", Poco::Message::PRIO_CRITICAL);
+	msg2.set("structured-data", "[exampleSDID@32473 iut=\"3\" eventSource=\"\\\"Applicat\\\"ion\" eventID=\"1011\"][examplePriority@32473 class=\"high\"]");
+	channel->log(msg2);
+	Poco::Thread::sleep(1000);
+	listener->close();
+	channel->close();
+	assertTrue (pCL->getCurrentSize() == 2);
+	std::vector<Poco::Message> msgs;
+	pCL->getMessages(msgs, 0, 10);
+	assertTrue (msgs.size() == 2);
+
+	assertTrue (msgs[0].getSource() == "asource");
+	assertTrue (msgs[0].getText() == "amessage");
+	assertTrue (msgs[0].getPriority() == Poco::Message::PRIO_CRITICAL);
+	assertTrue (msgs[0].get("structured-data") == "[exampleSDID@32473 iut=\"3\" eventSource=\"\\\"Applicat\\\"ion\" eventID=\"1011\"][examplePriority@32473 class=\"high\"]");
+
+	assertTrue (msgs[1].getSource() == "asource");
+	assertTrue (msgs[1].getText() == "amessage");
+	assertTrue (msgs[1].getPriority() == Poco::Message::PRIO_CRITICAL);
+	assertTrue (msgs[1].get("structured-data") == "[exampleSDID@32473 iut=\"3\" eventSource=\"Application\" eventID=\"1011\"]");
+}
+
 
 void SyslogTest::setUp()
 {
@@ -304,6 +339,7 @@ CppUnit::Test* SyslogTest::suite()
 	CppUnit_addTest(pSuite, SyslogTest, testChannelOpenClose);
 	CppUnit_addTest(pSuite, SyslogTest, testOldBSD);
 	CppUnit_addTest(pSuite, SyslogTest, testStructuredData);
+	CppUnit_addTest(pSuite, SyslogTest, testStructuredData2);
 
 	return pSuite;
 }

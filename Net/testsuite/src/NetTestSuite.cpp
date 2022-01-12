@@ -26,6 +26,7 @@
 #include "WebSocketTestSuite.h"
 #include "OAuthTestSuite.h"
 #include "SyslogTest.h"
+#include "RemoteSyslogListenerTest.h"
 
 
 CppUnit::Test* NetTestSuite::suite()
@@ -49,6 +50,7 @@ CppUnit::Test* NetTestSuite::suite()
 	pSuite->addTest(WebSocketTestSuite::suite());
 	pSuite->addTest(OAuthTestSuite::suite());
 	pSuite->addTest(SyslogTest::suite());
+	pSuite->addTest(RemoteSyslogListenerTest::suite());
 
 	return pSuite;
 }

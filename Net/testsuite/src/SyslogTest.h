@@ -29,6 +29,7 @@ public:
 	void testChannelOpenClose();
 	void testOldBSD();
 	void testStructuredData();
+	void testStructuredData2();
 
 	void setUp();
 	void tearDown();
